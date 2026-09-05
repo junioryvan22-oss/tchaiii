@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Que veux-tu manger ? 🍽️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="app">
+  <div class="card">
+    <h1 class="title">Que veux-tu manger ? 🍽️</h1>
+    <div class="options" id="foodOptions">
+      <button class="option" data-value="Pizza">🍕 Pizza</button>
+      <button class="option" data-value="Chawarma">🌯 Chawarma</button>
+      <button class="option" data-value="Panini">🥪 Panini</button>
+    </div>
+    <p class="or">ou dis-moi ce que tu veux vraiment :</p>
+    <input type="text" id="customFood" class="text-input" placeholder="Écris ton envie ici...">
+    <button class="btn btn-next" id="btnNextFood" disabled>Suivant →</button>
+  </div>
+</div>
+
+<script src="hearts.js"></script>
+<script>
+  let chosenFood = localStorage.getItem('chosenFood') || '';
+  const foodOptions = document.querySelectorAll('#foodOptions .option');
+  const customFood = document.getElementById('customFood');
+  const btnNextFood = document.getElementById('btnNextFood');
+
+  // Restaurer un choix déjà fait si on revient sur la page
+  if (chosenFood) {
+    btnNextFood.disabled = false;
+    foodOptions.forEach(o => {
+      if (o.dataset.value === chosenFood) o.classList.add('selected');
+    });
+    if (![...foodOptions].some(o => o.dataset.value === chosenFood)) {
+      customFood.value = chosenFood;
+    }
+  }
+
+  foodOptions.forEach(opt => {
+    opt.addEventListener('click', () => {
+      foodOptions.forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      chosenFood = opt.dataset.value;
+      customFood.value = '';
+      btnNextFood.disabled = false;
+    });
+  });
+
+  customFood.addEventListener('input', () => {
+    if (customFood.value.trim().length > 0) {
+      foodOptions.forEach(o => o.classList.remove('selected'));
+      chosenFood = customFood.value.trim();
+      btnNextFood.disabled = false;
+    } else if (!document.querySelector('#foodOptions .option.selected')) {
+      btnNextFood.disabled = true;
+    }
+  });
+
+  btnNextFood.addEventListener('click', () => {
+    localStorage.setItem('chosenFood', chosenFood);
+    window.location.href = 'page4.html';
+  });
+</script>
+</body>
+</html>

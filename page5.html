@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bisous 😘</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="app">
+  <div class="card">
+    <h1 class="title">Bisous, à bientôt 😘</h1>
+    <p class="subtitle" id="summary"></p>
+    <div class="big-heart">💖</div>
+  </div>
+</div>
+
+<script src="hearts.js"></script>
+<script>
+  const chosenFood = localStorage.getItem('chosenFood') || 'quelque chose de délicieux';
+  const chosenPlace = localStorage.getItem('chosenPlace') || '';
+  const chosenPickup = localStorage.getItem('chosenPickup') || '';
+  const chosenTime = localStorage.getItem('chosenTime') || '';
+
+  let text = `On mange ${chosenFood}`;
+  if (chosenPlace) text += ` à ${chosenPlace}`;
+  if (chosenPickup === 'chercher' && chosenTime) {
+    text += `. Je viens te chercher à ${chosenTime} 🚗`;
+  } else if (chosenPickup === 'chercher') {
+    text += `. Je viens te chercher 🚗`;
+  } else if (chosenPickup === 'seule') {
+    text += `. On se retrouve directement là-bas 💕`;
+  }
+  document.getElementById('summary').textContent = text;
+</script>
+</body>
+</html>

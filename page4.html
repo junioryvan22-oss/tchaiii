@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Où allons-nous manger ? 📍</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="app">
+  <div class="card">
+    <h1 class="title">Où allons-nous manger ? 📍</h1>
+    <input type="text" id="placeInput" class="text-input" placeholder="Propose un endroit qui te plaît...">
+
+    <p class="or">Je viens te chercher à quelle heure, ou tu préfères venir toi-même ?</p>
+    <div class="options" id="pickupOptions">
+      <button class="option" data-value="chercher">🚗 Viens me chercher</button>
+      <button class="option" data-value="seule">🚶‍♀️ Je viendrai moi-même</button>
+    </div>
+    <input type="time" id="timeInput" class="text-input" style="display:none;">
+
+    <button class="btn btn-next" id="btnNextPlace" disabled>Suivant →</button>
+  </div>
+</div>
+
+<script src="hearts.js"></script>
+<script>
+  let chosenPlace = localStorage.getItem('chosenPlace') || '';
+  let chosenPickup = localStorage.getItem('chosenPickup') || '';
+  let chosenTime = localStorage.getItem('chosenTime') || '';
+
+  const placeInput = document.getElementById('placeInput');
+  const pickupOptions = document.querySelectorAll('#pickupOptions .option');
+  const timeInput = document.getElementById('timeInput');
+  const btnNextPlace = document.getElementById('btnNextPlace');
+
+  // Restaurer les choix précédents
+  placeInput.value = chosenPlace;
+  if (chosenPickup) {
+    btnNextPlace.disabled = false;
+    pickupOptions.forEach(o => {
+      if (o.dataset.value === chosenPickup) o.classList.add('selected');
+    });
+    if (chosenPickup === 'chercher') {
+      timeInput.style.display = 'block';
+      timeInput.value = chosenTime;
+    }
+  }
+
+  pickupOptions.forEach(opt => {
+    opt.addEventListener('click', () => {
+      pickupOptions.forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      chosenPickup = opt.dataset.value;
+      timeInput.style.display = chosenPickup === 'chercher' ? 'block' : 'none';
+      btnNextPlace.disabled = false;
+    });
+  });
+
+  placeInput.addEventListener('input', () => {
+    chosenPlace = placeInput.value.trim();
+  });
+
+  timeInput.addEventListener('input', () => {
+    chosenTime = timeInput.value;
+  });
+
+  btnNextPlace.addEventListener('click', () => {
+    localStorage.setItem('chosenPlace', chosenPlace);
+    localStorage.setItem('chosenPickup', chosenPickup);
+    localStorage.setItem('chosenTime', chosenTime);
+    window.location.href = 'page5.html';
+  });
+</script>
+</body>
+</html>

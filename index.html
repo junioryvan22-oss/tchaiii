@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Une question pour toi 💕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="app">
+  <div class="card">
+    <h1 class="title">Veux-tu sortir avec moi ? 💘</h1>
+    <div class="btn-row" id="btnRow1">
+      <a href="page2.html" class="btn btn-yes" id="btnOui">Oui</a>
+      <button class="btn btn-no" id="btnNon">Non</button>
+    </div>
+    <p class="hint">(essaie un peu de cliquer sur le "Non"... 😏)</p>
+  </div>
+</div>
+
+<script src="hearts.js"></script>
+<script>
+  const btnNon = document.getElementById('btnNon');
+  const btnRow1 = document.getElementById('btnRow1');
+
+  function escapeNon() {
+    const rowRect = btnRow1.getBoundingClientRect();
+    const btnRect = btnNon.getBoundingClientRect();
+    const maxX = rowRect.width - btnRect.width;
+    const maxY = 120;
+    const randX = Math.random() * maxX - maxX / 2;
+    const randY = (Math.random() * maxY) - maxY / 2;
+    btnNon.style.position = 'relative';
+    btnNon.style.left = randX + 'px';
+    btnNon.style.top = randY + 'px';
+  }
+
+  btnNon.addEventListener('mouseenter', escapeNon);
+  btnNon.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    escapeNon();
+  });
+  btnNon.addEventListener('click', (e) => {
+    e.preventDefault();
+    escapeNon();
+  });
+</script>
+</body>
+</html>
