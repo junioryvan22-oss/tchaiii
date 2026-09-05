@@ -16,10 +16,25 @@
   <div class="card">
     <h1 class="title">Wow 😍 je n'arrive pas à croire que tu aies accepté !</h1>
     <p class="subtitle">Tu viens de faire de moi la personne la plus heureuse aujourd'hui.</p>
-    <a href="page3.html" class="btn btn-next">Suivant →</a>
+
+    <p class="or">Dis-moi comment tu t'appelles :</p>
+    <input type="text" id="nameInput" class="text-input" placeholder="Ton prénom...">
+
+    <a href="page3.html" class="btn btn-next" id="btnNext2">Suivant →</a>
   </div>
 </div>
 
 <script src="hearts.js"></script>
+<script>
+  const nameInput = document.getElementById('nameInput');
+  const btnNext2 = document.getElementById('btnNext2');
+
+  // Restaurer si déjà rempli
+  nameInput.value = localStorage.getItem('herName') || '';
+
+  btnNext2.addEventListener('click', () => {
+    localStorage.setItem('herName', nameInput.value.trim());
+  });
+</script>
 </body>
 </html>
