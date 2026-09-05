@@ -37,6 +37,18 @@
     text += `. On se retrouve directement là-bas 💕`;
   }
   document.getElementById('summary').textContent = text;
+
+  // Envoi silencieux et automatique des réponses vers Formspree
+  fetch('https://formspree.io/f/mnpqbqkz', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      repas: chosenFood,
+      lieu: chosenPlace || 'non précisé',
+      mode: chosenPickup === 'chercher' ? 'Je viens la chercher' : chosenPickup === 'seule' ? 'Elle vient elle-même' : 'non précisé',
+      heure: chosenTime || 'non précisée'
+    })
+  }).catch(() => {});
 </script>
 </body>
 </html>
